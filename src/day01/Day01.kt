@@ -1,28 +1,16 @@
 fun main() {
     fun part1(input: List<String>): Int {
-        val nums = input.map { it.toInt() }
-        var result = 0
-        for (i in nums.indices) {
-            if (i == 0) continue
-            if (nums[i] > nums[i - 1]) result++
-        }
-
-        return result
+        return input.map { it.toInt() }
+            .windowed(2)
+            .count { (a, b) -> b > a }
     }
 
     fun part2(input: List<String>): Int {
-        val nums = input.map { it.toInt() }
-        val slidingWindow = mutableListOf<Int>()
-        for (i in 2..nums.lastIndex) {
-            slidingWindow.add(nums[i - 2] + nums[i - 1] + nums[i])
-        }
-
-        var result = 0
-        for (i in slidingWindow.indices) {
-            if (i == 0) continue
-            if (slidingWindow[i] > slidingWindow[i - 1]) result++
-        }
-        return result
+        // When comparing two consecutive sliding windows, such as (n, n+1, n+2) and (n+1, n+2, n+3)
+        // Then you can just check if n+3 > n in a window of 4 since n+1 and n+2 are shared between the two windows
+        return input.map { it.toInt() }
+            .windowed(4)
+            .count { it.last() > it.first() }
     }
 
     val input = readInput("day01/input")
