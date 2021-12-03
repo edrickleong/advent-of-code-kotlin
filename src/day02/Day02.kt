@@ -1,3 +1,7 @@
+package day02
+
+import readInput
+
 fun main() {
     fun part1(lines: List<String>): Int {
         var depth = 0
