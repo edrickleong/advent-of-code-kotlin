@@ -15,28 +15,19 @@ fun main() {
 }
 
 private fun part1(min: Int, max: Int, positions: List<Int>): Long {
-    var result = Long.MAX_VALUE
-    for (i in min..max) {
-        result = minOf(result, positions.sumOf { abs(it - i).toLong() })
+    return (min..max).minOf { position ->
+        positions.sumOf { abs(it - position).toLong() }
     }
-
-    return result
 }
 
 private fun part2(min: Int, max: Int, positions: List<Int>): Long {
-    var result = Long.MAX_VALUE
-    for (i in min..max) {
-        result = minOf(result, positions.sumOf { fuelCost(abs(it - i)) })
+    return (min..max).minOf { position ->
+        positions.sumOf { fuelCost(abs(it - position)) }
     }
-
-    return result
 }
 
 val memo = mutableMapOf<Int, Long>()
 fun fuelCost(distance: Int): Long {
     if (distance == 0) return 0
-    memo[distance]?.let { return it }
-    val result = distance + fuelCost(distance - 1)
-    memo[distance] = result
-    return result
+    return memo.getOrPut(distance) { distance + fuelCost(distance - 1) }
 }
