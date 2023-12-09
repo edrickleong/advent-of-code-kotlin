@@ -1,6 +1,7 @@
 package year2021.day13
 
 import readInput
+import splitByEmptyLines
 
 fun main() {
     val input = readInput("year2021/day13/input")
@@ -76,22 +77,3 @@ private fun part2(input: List<String>): Number {
     return 0
 }
 
-fun List<String>.splitByEmptyLines(): List<List<String>> {
-    val blocks = mutableListOf<MutableList<String>>()
-    var currentBlock = mutableListOf<String>()
-    for (line in this) {
-        when {
-            line.isNotEmpty() -> currentBlock.add(line)
-            else -> {
-                if (currentBlock.isEmpty()) continue
-
-                blocks.add(currentBlock)
-                currentBlock = mutableListOf()
-            }
-        }
-    }
-
-    if (currentBlock.isNotEmpty()) blocks.add(currentBlock)
-
-    return blocks
-}
